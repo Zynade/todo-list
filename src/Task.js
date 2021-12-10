@@ -1,12 +1,12 @@
 export default class Task {
-    constructor(name, dueDate=null, priority=3) {
-        this.name = name;
+    constructor(taskName, dueDate=null, priority=3) {
+        this.taskName = taskName;
         this.dueDate = dueDate;
         this.priority = priority;
     }
 
-    setName(name) {
-        this.name = name;
+    setName(taskName) {
+        this.taskName = taskName;
     }
 
     getName() {
