@@ -6,8 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <script src="main.js" defer></script>
+    <link rel="stylesheet" href="./style/styles.css">
 </head>
 <body>
-    
+    <header id="header">
+        Todo List
+    </header>
+    <main class="main">
+        <div class="left-sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-tab">Today</div>
+                <div class="sidebar-tab">This Week</div>
+                <div class="sidebar-tab">This Month</div>
+                <div class="projects-tab sidebar-tab">
+                    <hr id="sidebar-line-break">
+                    Projects
+                    <ul class="projects-list">
+                        <li>Home</li>
+                        <li>My awesome project!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="main-panel-content">
+                <h1 id="main-project-title">My awesome project!</h1>
+                <div class="tasks-container">
+                    <div class="task-item">
+                        <div class="task-item-lhs">
+                            <input type="checkbox" class="checkbox">
+                            <div class="task-item-title">Withdraw some money from the ATM</div>
+                        </div>
+                        <div class="task-item-rhs">
+                            <div class="task-item-duedate">16/12/2021</div>
+                            <div class="task-item-edit">Edit</div>
+                            <div class="task-item-delete">Delete</div>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-item-lhs">
+                            <input type="checkbox" class="checkbox">
+                            <div class="task-item-title">Get some bread and milk</div>
+                        </div>
+                        <div class="task-item-rhs">
+                            <div class="task-item-duedate">16/12/2021</div>
+                            <div class="task-item-edit">Edit</div>
+                            <div class="task-item-delete">Delete</div>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-item-lhs">
+                            <input type="checkbox" class="checkbox">
+                            <div class="task-item-title">charge my phone before tonight's party</div>
+                        </div>
+                        <div class="task-item-rhs">
+                            <div class="task-item-duedate">16/12/2021</div>
+                            <div class="task-item-edit">Edit</div>
+                            <div class="task-item-delete">Delete</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
