@@ -2,52 +2,51 @@ import Project from './Project';
 import TodoList from './TodoList';
 
 export default class Storage {
-    saveTodoList(data) {
+    static saveTodoList(data) {
         localStorage.setItem('todoList', JSON.stringify(data));
     }
 
-    getTodoList() {
+    static getTodoList() {
         let todoList = new TodoList();
-        if (!(localStorage.getItem('todoList'))) {
-            const project = new Project('Home');
-            todoList = Storage.addProject(project);
-        } else {
-            todoList = Object.assign(todoList, JSON.parse(localStorage.getItem('todoList')));
-        }
+        todoList = Object.assign(todoList, JSON.parse(localStorage.getItem('todoList')));
+        console.log(todoList);
+
+        todoList.setProjects(todoList.getProjects().map(project => Object.assign(new Project(), project)));
+        todoList.getProjects().forEach(project => project.setTasks(project.getTasks().map(task => Object.assign(new Task(), task))));
         return todoList;
     }
 
-    addProject(project) {
+    static addProject(project) {
         const todoList = Storage.getTodoList();
         todoList.addProject(project);
         Storage.saveTodoList(todoList);
     }
 
-    removeProject(projectName) {
+    static removeProject(projectName) {
         const todoList = Storage.getTodoList();
         todoList.removeProject(projectName);
         Storage.saveTodoList(todoList);
     }
 
-    addTask(projectName, task) {
+    static addTask(projectName, task) {
         const todoList = Storage.getTodoList();
         todoList.getProject(projectName).addTask(task);
         Storage.saveTodoList(todoList);
     }
 
-    removeTask(projectName, taskName) {
+    static removeTask(projectName, taskName) {
         const todoList = Storage.getTodoList();
         todoList.getProject(projectName).removeTask(taskName);
         Storage.saveTodoList(todoList);
     }
 
-    renameTask(projectName, oldTaskName, newTaskName) {
+    static renameTask(projectName, oldTaskName, newTaskName) {
         const todoList = Storage.getTodoList();
         todoList.getProject(projectName).getTask(oldTaskName).setName(newTaskName);
         Storage.saveTodoList(todoList);
     }
 
-    setTaskDate(projectName, taskName, newDueDate) {
+    static setTaskDate(projectName, taskName, newDueDate) {
         const todoList = Storage.getTodoList();
         todoList.getProject(projectName).getTask(taskName).setTaskDate(newDueDate);
         Storage.saveTodoList(todoList);
