@@ -1,2 +1,2 @@
 import UI from './UI';
-UI.loadAllProjects();
+UI.loadPage();
