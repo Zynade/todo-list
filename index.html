@@ -15,9 +15,9 @@
     <main class="main">
         <div class="left-sidebar">
             <div class="sidebar-content">
-                <div class="sidebar-tab">Today</div>
-                <div class="sidebar-tab">This Week</div>
-                <div class="sidebar-tab">This Month</div>
+                    <div class="sidebar-tab upcoming-tab">Today</div>
+                    <div class="sidebar-tab upcoming-tab">This Week</div>
+                    <div class="sidebar-tab upcoming-tab">This Month</div>
                 <div class="sidebar-tab" id="projects-tab">
                     <hr id="sidebar-line-break">
                     Projects
@@ -31,9 +31,12 @@
         </div>
         <div class="main-panel">
             <div class="main-panel-content">
-                <h1 id="main-project-title">My awesome project!</h1>
+                <div class="main-panel-heading">
+                    <h1 id="main-project-title">My awesome project!</h1>
+                    <div id="project-delete-button">Delete Project</div>
+                </div>
                 <div class="tasks-container">
-                    <div class="task-item">
+                    <!-- <div class="task-item">
                         <div class="task-item-lhs">
                             <input type="checkbox" class="checkbox">
                             <div class="task-item-title">Withdraw some money from the ATM</div>
@@ -65,7 +68,7 @@
                             <div class="task-item-edit">Edit</div>
                             <div class="task-item-delete">Delete</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="new-task-button">+</div>
             </div>
