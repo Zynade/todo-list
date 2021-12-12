@@ -7,12 +7,12 @@ export default class TodoList {
         return this.projects
     }
 
-    setProjects(project) {
-        this.projects = project
+    setProjects(projects) {
+        this.projects = projects
     }
 
     getProject(projectName) {
-        return this.projects.find(project => project.getName() === projectName);
+        return this.projects.find(project => project.getProjectName() === projectName);
     }
 
     addProject(project) {
@@ -21,5 +21,9 @@ export default class TodoList {
 
     removeProject(projectName) {
         this.projects = this.projects.filter(project => project.getProjectName() !== projectName);
+    }
+
+    contains(projectName) {
+        return this.projects.some(project => project.getProjectName() === projectName);
     }
 }
