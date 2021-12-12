@@ -5,30 +5,25 @@ import Task from './Task';
 let currentProjectName = 'Home';
 
 export default class UI {
-    // static addDefaultData() {
-    //     const defaultProject = new Project('Home');
-    //     // const tasks = [
-    //     //     new Task('Iron my clothes'),
-    //     //     new Task('Charge my phone before tonight\'s party'),
-    //     //     new Task('Withdraw some cash from the ATM')
-    //     // ];
-    //     // defaultProject.setTasks(tasks);
+    static addDefaultData() {
+        const defaultProject = new Project('Home');
+        // const tasks = [
+        //     new Task('Iron my clothes'),
+        //     new Task('Charge my phone before tonight\'s party'),
+        //     new Task('Withdraw some cash from the ATM')
+        // ];
+        // defaultProject.setTasks(tasks);
 
-    //     defaultProject.push(new Task('Iron my clothes'));
-    //     defaultProject.push(new Task('Charge my phone before tonight\'s party'));
-    //     defaultProject.push(new Task('Withdraw some cash from the ATM'));
-    //     console.log(defaultProject.getTasks());
-    //     Storage.addProject(defaultProject);
-    // }
+        defaultProject.addTask(new Task('Iron my clothes'));
+        defaultProject.addTask(new Task('Charge my phone before tonight\'s party'));
+        defaultProject.addTask(new Task('Withdraw some cash from the ATM'));
+        console.log(defaultProject.getTasks());
+        Storage.addProject(defaultProject);
+    }
 
     static loadPage() {
         if (!localStorage.getItem('todoList')) {
-            // UI.addDefaultData();
-            const defaultProject = new Project('Home');
-            defaultProject.addTask(new Task('Iron my clothes'));
-            defaultProject.addTask(new Task('Charge my phone before tonight\'s party'));
-            defaultProject.addTask(new Task('Withdraw some cash from the ATM'));
-            console.log(defaultProject.getTasks());
+            UI.addDefaultData();
         }
 
         UI.initUpcomingTabs();
