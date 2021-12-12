@@ -41,9 +41,9 @@ margin: 0 15px;
 .sidebar-content {
     display: flex;
     flex-direction: column;
-    margin: 3em 2em;
     font-weight: bold;
     color: black;
+    margin: 3em 2em;
 }
 
 .sidebar-tab {
@@ -58,7 +58,7 @@ margin: 0 15px;
 }
 
 .projects-list li {
-    margin-top: 1.25vh;
+    margin-top: 1.75vh;
     margin-left: 2vw;
 }
 
@@ -80,6 +80,22 @@ margin: 0 15px;
     flex-direction: column;
 }
 
+.main-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#project-delete-button {
+    background-color: rgb(253, 124, 124);
+    border:3px solid crimson;
+    padding: 0.75em;
+    font-size: 1.5rem;
+    margin-top: 1vw;
+    margin-right: 5vw;
+    border-radius: 50px;
+}
+
 #main-project-title {
     font-size: 2.25rem;
 }
@@ -87,8 +103,8 @@ margin: 0 15px;
 .task-item {
     display: flex;
     justify-content: space-between;
-    border: 2px solid green;
-    border: 2px solid rgb(165, 163, 29);
+    /* border: 2px solid green; */
+    border: 2px solid rgba(165, 163, 29, 0.7);
     border-radius: 50vh;
     height: 8vh;
     font-size: 1.25em;
@@ -113,6 +129,20 @@ margin: 0 15px;
 .task-item-title {
     display: flex;
     flex-wrap: wrap;
+}
+
+.task-item-edit {
+    border:3px solid blue;
+    background-color: rgb(213, 213, 253);
+    border-radius: 50vw;
+    padding: 5px;
+}
+
+.task-item-delete {
+    border:3px solid red;
+    background-color: rgb(250, 157, 175);
+    border-radius: 50vw;
+    padding: 5px;
 }
 
 #new-project-button, #new-task-button {
