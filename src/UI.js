@@ -45,6 +45,7 @@ export default class UI {
     }
 
     static initTasksPage() {
+        UI.clearTasksList();
         UI.generateMainHeading();
         UI.generateTaskItems();
     }
@@ -212,7 +213,9 @@ export default class UI {
     static generateTaskItems() {
         const currentProject = Storage.getTodoList().getProject(currentProjectName);
         currentProject.getTasks().forEach(task => UI.addTaskItem(task));
-        UI.addNewTaskButton();
+         if (!document.querySelector('#new-task-button')) {   
+            UI.addNewTaskButton();
+         }
     }
 
     static hideNewTaskButton() {
