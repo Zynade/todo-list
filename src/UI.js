@@ -2,7 +2,7 @@ import Project from './Project';
 import TodoList from './TodoList'
 import Storage from './Storage';
 import Task from './Task';
-import { format } from 'date-fns';
+import { format, toDate, isThisWeek, isThisMonth, parse} from 'date-fns';
 let currentProjectName = 'Home';
 
 export default class UI {
@@ -261,15 +261,43 @@ export default class UI {
     }
 
     static generateTaskItems() {
-        const currentProject = Storage.getTodoList().getProject(currentProjectName);
+        const forbiddenProjects = ['Today', 'This Week', 'This Month'];
+        let currentProject;
+        if (forbiddenProjects.includes(currentProjectName)) {
+            const today = new Project('Today');
+            const thisWeek = new Project('This Week');
+            const thisMonth = new Project('This Month');
+
+            Storage.getTodoList().getProjects().forEach(project => {
+                project.getTasks().forEach(task => {
+                    if (task.getDate() === format(new Date(), "dd-MM-yyyy")) {
+                        today.addTask(task);
+                    };
+                    if (isThisWeek(toDate(parse(task.getDate(), 'dd-MM-yyyy', new Date())))) {
+                        thisWeek.addTask(task);
+                    }
+                    if (isThisMonth(toDate(parse(task.getDate(), 'dd-MM-yyyy', new Date())))) {
+                        thisMonth.addTask(task);
+                    }
+                })
+            })
+            currentProject = currentProjectName === 'Today' ? today : currentProjectName === 'This Week' ? thisWeek : thisMonth;
+            UI.hideNewTaskButton();
+        }   else {
+            currentProject = Storage.getTodoList().getProject(currentProjectName);
+        }
         currentProject.getTasks().forEach(task => UI.addTaskItem(task));
-         if (!document.querySelector('#new-task-button')) {   
+        if (!document.querySelector('#new-task-button') && !forbiddenProjects.includes(currentProjectName))  {   
             UI.addNewTaskButton();
-         }
+        }
     }
 
     static hideNewTaskButton() {
-        document.querySelector('#new-task-button').remove();
+        const newTaskButton = document.querySelector('#new-task-button')
+        if (!!newTaskButton) {
+            newTaskButton.remove();
+        }
+        
     }
 
     static addNewTaskButton() {
@@ -330,7 +358,6 @@ export default class UI {
 
     static formatDate(date) {
         const d = new Date(date);
-        console.log(d);
         let newDate;
         if (!!d.valueOf()) {
             const year = d.getFullYear();
@@ -341,7 +368,6 @@ export default class UI {
             // default to today's date if the inputted date is somehow invalid
             newDate = format(new Date(), "dd-MM-yyyy")
         }
-        console.log('Taske deadline:', newDate);
         return newDate;
     }
 
