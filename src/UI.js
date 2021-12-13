@@ -1,9 +1,9 @@
 import Project from './Project';
-import TodoList from './TodoList'
 import Storage from './Storage';
 import Task from './Task';
-import { format, toDate, isThisWeek, isThisMonth, parse} from 'date-fns';
+import { format, toDate, isThisWeek, isThisMonth, parse } from 'date-fns';
 let currentProjectName = 'Home';
+const forbiddenProjects = ['Today', 'This Week', 'This Month'];
 
 export default class UI {
     static addDefaultData() {
@@ -14,10 +14,6 @@ export default class UI {
             new Task('Withdraw some cash from the ATM', '25-12-2021')
         ];
         defaultProject.setTasks(tasks);
-
-        // defaultProject.addTask(new Task('Iron my clothes'));
-        // defaultProject.addTask(new Task('Charge my phone before tonight\'s party'));
-        // defaultProject.addT(new Task('Withdraw some cash from the ATM'));
         Storage.addProject(defaultProject);
     }
 
@@ -73,7 +69,7 @@ export default class UI {
             UI.tabClickHandler(projectName);
         });
     }
-    
+
     static tabClickHandler(projectName) {
         currentProjectName = projectName;
         UI.initTasksPage();
@@ -160,7 +156,6 @@ export default class UI {
         <h1 id="main-project-title">${currentProjectName}</h1>
         <div id="project-delete-button">Delete Project</div>
         `;
-        const forbiddenProjects = ['Today', 'This Week', 'This Month'];
         const deleteButton = document.querySelector('#project-delete-button')
         if (forbiddenProjects.includes(currentProjectName)) {
             deleteButton.remove();
@@ -214,10 +209,14 @@ export default class UI {
     }
 
     static editTaskHandler(event) {
+        if (forbiddenProjects.includes(currentProjectName)) {
+            alert(`Sorry, currently you cannot edit tasks from this menu. Please go to the ${currentProjectName} tab to edit this task.`);
+            return;
+        }
         const editButton = event.target
         const container = editButton.parentNode.parentNode;
         const taskName = Array.from(Array.from(container.children)[0].children).slice(-1)[0].innerHTML;
-    
+
         UI.hideNewTaskButton();
 
         const mainContainer = document.querySelector('.main-panel-content')
@@ -246,9 +245,13 @@ export default class UI {
         });
         document.querySelector('#new-task-cancel-button').addEventListener('click', UI.cancelTask);
     }
-        
+
 
     static deleteTaskHandler(event) {
+        if (forbiddenProjects.includes(currentProjectName)) {
+            alert(`Sorry, currently you cannot delete tasks from this menu. Please go to the ${currentProjectName} tab to delete this task.`);
+            return;
+        }
         const deleteButton = event.target;
         const taskName = Array.from(Array.from(event.target.parentNode.parentNode.children)[0].children).slice(-1)[0].innerHTML;
 
@@ -257,11 +260,10 @@ export default class UI {
         }
         deleteButton.parentNode.parentNode.remove();
         Storage.removeTask(currentProjectName, taskName);
-        console.log('Deleted task:\n',taskName);
+        console.log('Deleted task:\n', taskName);
     }
 
     static generateTaskItems() {
-        const forbiddenProjects = ['Today', 'This Week', 'This Month'];
         let currentProject;
         if (forbiddenProjects.includes(currentProjectName)) {
             const today = new Project('Today');
@@ -283,11 +285,11 @@ export default class UI {
             })
             currentProject = currentProjectName === 'Today' ? today : currentProjectName === 'This Week' ? thisWeek : thisMonth;
             UI.hideNewTaskButton();
-        }   else {
+        } else {
             currentProject = Storage.getTodoList().getProject(currentProjectName);
         }
         currentProject.getTasks().forEach(task => UI.addTaskItem(task));
-        if (!document.querySelector('#new-task-button') && !forbiddenProjects.includes(currentProjectName))  {   
+        if (!(document.querySelector('#new-task-button')) && !(forbiddenProjects.includes(currentProjectName))) {
             UI.addNewTaskButton();
         }
     }
@@ -297,7 +299,6 @@ export default class UI {
         if (!!newTaskButton) {
             newTaskButton.remove();
         }
-        
     }
 
     static addNewTaskButton() {
@@ -338,7 +339,7 @@ export default class UI {
         if (taskName === '') {
             alert('Sorry mate, you can\'t have a blank task name.');
             return false;
-        } 
+        }
         if (Storage.getTodoList().getProject(currentProjectName).containsTask(taskName)) {
             alert('That task already exists!');
             return false;
