@@ -2,15 +2,16 @@ import Project from './Project';
 import TodoList from './TodoList'
 import Storage from './Storage';
 import Task from './Task';
+import { format } from 'date-fns';
 let currentProjectName = 'Home';
 
 export default class UI {
     static addDefaultData() {
         const defaultProject = new Project('Home');
         const tasks = [
-            new Task('Iron my clothes', '2021/10/28'),
-            new Task('Charge my phone before tonight\'s party', '2020/2/21'),
-            new Task('Withdraw some cash from the ATM', '2022/01/01')
+            new Task('Iron my clothes', '28-10-2021'),
+            new Task('Charge my phone before tonight\'s party', '07-01-2022'),
+            new Task('Withdraw some cash from the ATM', '25-12-2021')
         ];
         defaultProject.setTasks(tasks);
 
@@ -208,7 +209,21 @@ export default class UI {
         </div>
         `
         taskContainer.appendChild(taskItem);
-    }
+
+    //     const deleteButton = Array.from(document.querySelectorAll('.task-item-delete')).slice(-1)[0];
+    //     deleteButton.addEventListener('click', UI.deleteTaskHandler);
+    // }
+
+    // static deleteTaskHandler(event) {
+    //     const deleteButton = event.target;
+    //     const taskName = Array.from(Array.from(event.target.parentNode.parentNode.children)[0].children).slice(-1)[0].innerHTML;
+
+    //     if (!confirm(`Are you sure you want to delete the following task?\n${taskName}`)) {
+    //         return;
+    //     }
+    //     deleteButton.parentNode.parentNode.remove();
+    //     Storage.removeTask(currentProjectName, taskName);
+    // }
 
     static generateTaskItems() {
         const currentProject = Storage.getTodoList().getProject(currentProjectName);
@@ -256,8 +271,7 @@ export default class UI {
         const addTaskInput = document.querySelector('.new-task-input-field');
         const addTaskDate = document.querySelector('.new-task-date-field');
         const taskName = addTaskInput.value;
-        const taskDate = addTaskDate.value;
-
+        let taskDate = addTaskDate.value;
         if (taskName === '') {
             alert('Sorry mate, you can\'t have a blank task name.');
             return;
@@ -270,12 +284,30 @@ export default class UI {
             alert("Please choose a date.");
             return;
         }
+        taskDate = UI.formatDate(taskDate);
 
         const task = new Task(taskName, taskDate);
         Storage.addTask(currentProjectName, task);
         console.log('Added task:', task.getName());
         UI.cancelTask();
 
+    }
+
+    static formatDate(date) {
+        const d = new Date(date);
+        console.log(d);
+        let newDate;
+        if (!!d.valueOf()) {
+            const year = d.getFullYear();
+            const month = d.getMonth();
+            const day = d.getDate();
+            newDate = format(new Date(year, month, day), "dd-MM-yyyy");
+        } else {
+            // default to today's date if the inputted date is somehow invalid
+            newDate = format(new Date(), "dd-MM-yyyy")
+        }
+        console.log('Taske deadline:', newDate);
+        return newDate;
     }
 
     static cancelTask() {
