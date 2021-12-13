@@ -210,20 +210,21 @@ export default class UI {
         `
         taskContainer.appendChild(taskItem);
 
-    //     const deleteButton = Array.from(document.querySelectorAll('.task-item-delete')).slice(-1)[0];
-    //     deleteButton.addEventListener('click', UI.deleteTaskHandler);
-    // }
+        const deleteButton = Array.from(document.querySelectorAll('.task-item-delete')).slice(-1)[0];
+        deleteButton.addEventListener('click', UI.deleteTaskHandler);
+    }
 
-    // static deleteTaskHandler(event) {
-    //     const deleteButton = event.target;
-    //     const taskName = Array.from(Array.from(event.target.parentNode.parentNode.children)[0].children).slice(-1)[0].innerHTML;
+    static deleteTaskHandler(event) {
+        const deleteButton = event.target;
+        const taskName = Array.from(Array.from(event.target.parentNode.parentNode.children)[0].children).slice(-1)[0].innerHTML;
 
-    //     if (!confirm(`Are you sure you want to delete the following task?\n${taskName}`)) {
-    //         return;
-    //     }
-    //     deleteButton.parentNode.parentNode.remove();
-    //     Storage.removeTask(currentProjectName, taskName);
-    // }
+        if (!confirm(`Are you sure you want to delete the following task?\n${taskName}`)) {
+            return;
+        }
+        deleteButton.parentNode.parentNode.remove();
+        Storage.removeTask(currentProjectName, taskName);
+        console.log('Deleted task:\n',taskName);
+    }
 
     static generateTaskItems() {
         const currentProject = Storage.getTodoList().getProject(currentProjectName);
