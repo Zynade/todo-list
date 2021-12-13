@@ -16,6 +16,15 @@ padding: .6em 0;
 margin: 0 15px;
 } 
 
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 #header {
     height: 14vh;
     background-color: rgb(41, 8, 8);
@@ -29,6 +38,8 @@ margin: 0 15px;
 
 .main {
     display: flex;
+    flex: 1;
+    min-height: 100%;
 }
 
 .left-sidebar {
@@ -246,4 +257,28 @@ margin: 0 15px;
 
 #new-task-cancel-button {
     background-color: rgb(253, 124, 124);
+}
+
+.footer {
+    height: 8vh;
+    background-color: rgb(41, 8, 8);
+    color: rgb(237, 241, 198);
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2px;
+    margin-top: auto;
+}
+
+.footer > p {
+    color: white;
+    font-weight: 500;
+}
+
+#source-code-link {
+    list-style-type:none;
+    color: rgb(62, 139, 255);
+    font-weight:700;
 }
