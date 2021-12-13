@@ -199,7 +199,7 @@ export default class UI {
             <div class="task-item-edit">Edit</div>
             <div class="task-item-delete">Delete</div>
         </div>
-        ` // <div class="task-item-edit">Edit</div>
+        `
         taskContainer.appendChild(taskItem);
 
         const deleteButton = Array.from(document.querySelectorAll('.task-item-delete')).slice(-1)[0];
