@@ -76,7 +76,6 @@ export default class UI {
     
     static tabClickHandler(projectName) {
         currentProjectName = projectName;
-        // UI.generateMainHeading();
         UI.initTasksPage();
     }
 
@@ -137,7 +136,6 @@ export default class UI {
         console.log('Added project:', project.getProjectName());
         currentProjectName = projectName;
         UI.cancelProject();
-        // UI.generateMainHeading();
         UI.initTasksPage();
     }
 
@@ -182,7 +180,6 @@ export default class UI {
         }
         UI.deleteProject();
         currentProjectName = Storage.getTodoList().getProjects().slice(-1)[0].getProjectName();
-        // UI.generateMainHeading();
         UI.initTasksPage();
     }
 
@@ -204,40 +201,52 @@ export default class UI {
         </div>
         <div class="task-item-rhs">
             <div class="task-item-duedate">${date}</div>
-            
+            <div class="task-item-edit">Edit</div>
             <div class="task-item-delete">Delete</div>
         </div>
         ` // <div class="task-item-edit">Edit</div>
         taskContainer.appendChild(taskItem);
 
         const deleteButton = Array.from(document.querySelectorAll('.task-item-delete')).slice(-1)[0];
-        // const editButton = Array.from(document.querySelectorAll('.task-item-edit')).slice(-1)[0];
+        const editButton = Array.from(document.querySelectorAll('.task-item-edit')).slice(-1)[0];
         deleteButton.addEventListener('click', UI.deleteTaskHandler);
-        // editButton.addEventListener('click', UI.editTaskHandler);
+        editButton.addEventListener('click', UI.editTaskHandler);
     }
 
-    // static editTaskHandler(event) {
-    //     const container = event.target.parentNode.parentNode;
-    //     const taskName = Array.from(Array.from(container.children)[0].children).slice(-1)[0].innerHTML;
-    //     const div = document.createElement('div');
-    //     div.classList.add('edit-task-container');
-    //     div.innerHTML = `
-    //         <div class="new-task-popup-inputs">
-    //             <input type="text" size="40" name="taskName" class="new-task-input-field" id="new-task-input-field">
-    //             <input type="date" name="taskDate" class="new-task-date-field" id="new-task-date-field" onfocus="blur()" required>
-    //         </div>
-    //         <div class="new-task-popup-buttons">
-    //             <button id="new-task-add-button">Add</button>
-    //             <button id="new-task-cancel-button">Cancel</button>
-    //         </div>
-    //     `
-    //     container.innerHTML = '';
-    //     container.appendChild(div);
-        
+    static editTaskHandler(event) {
+        const editButton = event.target
+        const container = editButton.parentNode.parentNode;
+        const taskName = Array.from(Array.from(container.children)[0].children).slice(-1)[0].innerHTML;
+    
+        UI.hideNewTaskButton();
 
-    //     // document.querySelector('#new-task-add-button').addEventListener('click', UI.addTaskHandler);
-    //     // document.querySelector('#new-task-cancel-button').addEventListener('click', UI.cancelTask);
-    // }
+        const mainContainer = document.querySelector('.main-panel-content')
+        const div = document.createElement('div');
+        div.classList.add('new-task-container');
+        div.innerHTML = `
+            <div class="new-task-popup-inputs">
+                <input type="text" size="40" name="taskName" class="new-task-input-field" id="new-task-input-field" value="${taskName}">
+                <input type="date" name="taskDate" class="new-task-date-field" id="new-task-date-field" onfocus="blur()" required>
+            </div>
+            <div class="new-task-popup-buttons">
+                <button id="new-task-add-button">Edit</button>
+                <button id="new-task-cancel-button">Cancel</button>
+            </div>
+        `
+        mainContainer.appendChild(div);
+
+        document.querySelector('#new-task-add-button').addEventListener('click', (e) => {
+            const isTaskAdded = UI.addTaskHandler(e);
+            if (isTaskAdded) {
+                editButton.parentNode.parentNode.remove();
+                Storage.removeTask(currentProjectName, taskName);
+                UI.clearTasksList();
+                UI.generateTaskItems();
+            }
+        });
+        document.querySelector('#new-task-cancel-button').addEventListener('click', UI.cancelTask);
+    }
+        
 
     static deleteTaskHandler(event) {
         const deleteButton = event.target;
@@ -300,15 +309,15 @@ export default class UI {
         let taskDate = addTaskDate.value;
         if (taskName === '') {
             alert('Sorry mate, you can\'t have a blank task name.');
-            return;
+            return false;
         } 
         if (Storage.getTodoList().getProject(currentProjectName).containsTask(taskName)) {
-            alert('That project already exists!');
-            return;
+            alert('That task already exists!');
+            return false;
         }
         if (!taskDate) {
             alert("Please choose a date.");
-            return;
+            return false;
         }
         taskDate = UI.formatDate(taskDate);
 
@@ -316,7 +325,7 @@ export default class UI {
         Storage.addTask(currentProjectName, task);
         console.log('Added task:', task.getName());
         UI.cancelTask();
-
+        return true;
     }
 
     static formatDate(date) {
