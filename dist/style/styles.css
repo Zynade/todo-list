@@ -33,7 +33,9 @@ margin: 0 15px;
 
 .left-sidebar {
     width: 350px;
-    height: 86vh;
+    /* height: 86vh; */
+    height: stretch;
+    min-height: 100vh;
     background-color: wheat;
     border-right: 1px solid black;
 }
@@ -199,5 +201,49 @@ margin: 0 15px;
 }
 
 #new-project-cancel-button {
+    background-color: rgb(253, 124, 124);
+}
+
+
+.new-task-popup-inputs {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+    font-size: 1.25em;
+}
+
+.new-task-input-field {
+    border: 1px solid black;
+    margin-right: 2vw;
+}
+
+.new-task-date-field {
+    border: 1px solid black;
+    margin-right: 2vw;
+    border-radius: 1vw;
+}
+
+.new-task-popup-buttons {
+    display: flex;
+    justify-content:stretch;
+    margin-left: 2vw;
+    font-size: 1.25rem;
+    padding: 2px;
+}
+
+#new-task-add-button, #new-task-cancel-button {
+    margin-top: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:10vw;
+    height: 5vh;
+}
+
+#new-task-add-button {
+    background-color: rgb(117, 255, 117);
+}
+
+#new-task-cancel-button {
     background-color: rgb(253, 124, 124);
 }
