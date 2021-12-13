@@ -210,7 +210,7 @@ export default class UI {
 
     static editTaskHandler(event) {
         if (forbiddenProjects.includes(currentProjectName)) {
-            alert(`Sorry, currently you cannot edit tasks from this menu. Please go to the ${currentProjectName} tab to edit this task.`);
+            alert(`Sorry, currently you cannot edit tasks from this menu. Please visit the relevant Project tab to edit this task.`);
             return;
         }
         const editButton = event.target
@@ -249,7 +249,7 @@ export default class UI {
 
     static deleteTaskHandler(event) {
         if (forbiddenProjects.includes(currentProjectName)) {
-            alert(`Sorry, currently you cannot delete tasks from this menu. Please go to the ${currentProjectName} tab to delete this task.`);
+            alert(`Sorry, currently you cannot delete tasks from this menu. Please visit the relevant Project tab to delete this task.`);
             return;
         }
         const deleteButton = event.target;
