@@ -1,17 +1,25 @@
 import Project from './Project';
 import Storage from './Storage';
 import Task from './Task';
-import { format, toDate, isThisWeek, isThisMonth, parse } from 'date-fns';
+import { format, toDate, isThisWeek, isThisMonth, parse, addDays } from 'date-fns';
 let currentProjectName = 'Home';
 const forbiddenProjects = ['Today', 'This Week', 'This Month'];
 
 export default class UI {
     static addDefaultData() {
         const defaultProject = new Project('Home');
+        
+        const todaysDateFormatted = format(new Date(), "dd-MM-yyyy");
+        const todaysDate = toDate(parse(todaysDateFormatted, 'dd-MM-yyyy', new Date()));
+        const tmp1 = format(addDays(todaysDate, 2), "dd-MM-yyyy");
+        const tmp2 = format(addDays(todaysDate, 4), "dd-MM-yyyy");
+        const tmp3 = format(addDays(todaysDate, 14), "dd-MM-yyyy");
         const tasks = [
-            new Task('Iron my clothes', '28-10-2021'),
-            new Task('Charge my phone before tonight\'s party', '07-01-2022'),
-            new Task('Withdraw some cash from the ATM', '25-12-2021')
+            new Task('Iron my clothes', todaysDateFormatted),
+            new Task('Charge my phone before tonight\'s party', tmp1),
+            new Task('Study for the DSA quiz', todaysDateFormatted),
+            new Task('Withdraw some cash from the ATM', tmp2),
+            new Task('Submit the game design project', tmp3)
         ];
         defaultProject.setTasks(tasks);
         Storage.addProject(defaultProject);
