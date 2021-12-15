@@ -1,40 +1,40 @@
 export default class Project {
-    constructor(projectName) {
-        this.projectName = projectName;
-        this.tasks = [];
-    }
+  constructor(projectName) {
+    this.projectName = projectName;
+    this.tasks = [];
+  }
 
-    getProjectName() {
-        return this.projectName;
-    }
+  getProjectName() {
+    return this.projectName;
+  }
 
-    setProjectName(name) {
-        this.projectName = name;
-    }
+  setProjectName(name) {
+    this.projectName = name;
+  }
 
-    getTasks() {
-        return this.tasks;
-    }
+  getTasks() {
+    return this.tasks;
+  }
 
-    setTasks(tasks) {
-        this.tasks = tasks;
-    }
+  setTasks(tasks) {
+    this.tasks = tasks;
+  }
 
-    getTask(taskName) {
-        return this.tasks.find((task) => task.getName() === taskName);
-    }
+  getTask(taskName) {
+    return this.tasks.find((task) => task.getName() === taskName);
+  }
 
-    containsTask(taskName) {
-        return this.tasks.some(task => task.getName() === taskName);
-    }
+  containsTask(taskName) {
+    return this.tasks.some((task) => task.getName() === taskName);
+  }
 
-    addTask(newTask) {
-        if (!(this.tasks.find((task) => newTask.name === task.getName()))) {
-            this.tasks.push(newTask);
-        }
+  addTask(newTask) {
+    if (!(this.tasks.find((task) => newTask.name === task.getName()))) {
+      this.tasks.push(newTask);
     }
+  }
 
-    removeTask(taskName) {
-        this.tasks = this.tasks.filter((task) => task.getName() !== taskName);
-    }
+  removeTask(taskName) {
+    this.tasks = this.tasks.filter((task) => task.getName() !== taskName);
+  }
 }
